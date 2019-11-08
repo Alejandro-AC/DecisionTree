@@ -47,7 +47,7 @@ class Nodo():
                     self.procesarVen(elemento[i],i)
                 else:
                     self.procesarNoVen(elemento[i],i)
-        self.atributoSelec=self.guany()
+        self.atributoSelec= self.guany() +1 
         
 
     def procesarVen(self,atribut,pos):
@@ -73,6 +73,7 @@ class Nodo():
         listaC = []    # caracterisiticas que hay comestibles y venenosos 
         Total = 0
         H = 0
+        St = 0
         H_menor = 10000
         Atributo = 0
         print("Data set inical:")    #para ver en pantalla con que datos trabajara guany
@@ -97,27 +98,32 @@ class Nodo():
                 ### no hace falta hacerlos, solo en caso que len(listaC) == 0 
                 ### tener en cuenta que toda la H sera 0
                 
-                if(len(listaC) != 0):    
+                if(len(listaC) != 0): 
+                    H = 0
                     for j in listaC:
                         veneno = float(self.listaDicVen[i][j])
                         comestible = float(self.listaDicEd[i][j])
-                        H = 0
-                        
+                        #H = 0
+                        a = 0
                         St = veneno + comestible
                         
-                        H = H - (veneno/St) * m.log((veneno/St), 2)
-                        H = H - (comestible/St) * m.log((comestible/St), 2)
-                        H = (St/Total)*H
+                        a = a - (veneno/St) * m.log((veneno/St), 2)
+                        a = a - (comestible/St) * m.log((comestible/St), 2)
+                        H =  H + (St/Total)*a
                 else:
                     H = 0
                 if (H < H_menor) and (H>0):
                     H_menor = H
                     Atributo = i
+                    #Atributo = Atributo + 1
+                #print (H)
+                #print(St)
+                #print(Total)
             print("La seleccion es:")        
             print(Atributo)
             print H_menor
                
-        return Atributo    
+        return Atributo
         
     def crearHijos(self):
         print("FUNCION Creamos hijos------")
@@ -127,16 +133,16 @@ class Nodo():
 #            elemento.pop(self.atributoSelec)
 #        if self.finalFulla==False:
         if (len(self.listaDicEd) >0) and (len(self.listaDicVen) >0):
-                print("Columnna seleccionada: "+str(self.atributoSelec))
+                print("Columnna seleccionada: "+str(self.atributoSelec + 1))
 
-                for campo in self.listaKeys[self.atributoSelec-1]:
+                for campo in self.listaKeys[self.atributoSelec]:
                     for elemento in self.dataHijos:
     #                    print elemento[self.atributoSelec]
                         if elemento[self.atributoSelec] == campo:
     #                        print("es igual")
                             datosAuxHijosCat.append(elemento)
                             
-                    if (self.contadorBucle <= 3):  ##para cortar la profunidad en 3 para el debug
+                    if (self.contadorBucle <= 2):  ##para cortar la profunidad en 3 para el debug
                         print("Creamos hijo para el campo: "+str(campo)+ " de la columna "+str(self.atributoSelec))
                         print("Estamos en"+str(self.categoriaNodo)+" la cual tiene " +str(len(self.listaKeys[self.atributoSelec-1]))+" hijos")
 

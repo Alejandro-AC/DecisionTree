@@ -119,9 +119,11 @@ class Tree():
                 H = 0
            
             print (H)
+            print(St)
+            print(Total)
             if (H < H_menor):
                 H_menor = H
-                Atributo = i
+                Atributo = i + 1
                 
         print(Atributo)
         return Atributo
