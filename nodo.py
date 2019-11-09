@@ -52,9 +52,9 @@ class Nodo():
 #        print("-----")
 #
         print("LEN------------------ Data set inical:")  # para ver en pantalla con que datos trabajara guany
-        print len(self.listaDicEd)
+        print (len(self.listaDicEd))
         print("-----")
-        print len(self.listaDicVen)
+        print (len(self.listaDicVen))
         print("-----")                
         if ((len(self.listaDicEd) > 0) and (len(self.listaDicVen)>0)):                    
             self.atributoSelec = self.guany() + 1
@@ -99,10 +99,9 @@ class Nodo():
         print("funcio guany de nodo "+str(self.categoriaNodo))
         print("Data set inical:")  # para ver en pantalla con que datos trabajara guany
         print("-----Comestibles:")
-
-        print self.listaDicEd
+        print(self.listaDicEd)
         print("-----Venenosas:")
-        print self.listaDicVen
+        print(self.listaDicVen)
         print("-----")
 
         if len(
