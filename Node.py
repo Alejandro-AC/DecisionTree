@@ -11,7 +11,7 @@ class Node():
         self.class_label = class_label
         self.class_value = class_value
 
-        self.decision_algorithm = da.DecisionAlgorithm('id3', self.data_set)  # TODO make it class/global variable of the Tree
+        self.decision_algorithm = da.DecisionAlgorithm('ID3', self.data_set.data)  # TODO make it class/global variable of the Tree
 
         # Check that there is more than 1 column (+ Class) and that Class has different values
         if self.data_set.data.shape[1] > 2 and len(np.unique(self.data_set.data[:, 0])) > 1:
@@ -22,6 +22,15 @@ class Node():
         class_label = self.data_set.labels[class_label_idx]
 
         for class_value in ds.DataSet.labels_possible_values[class_label]:
-            child_subset = ds.DataSet.create_subset(class_label, class_value, self.data_set.data)
+            child_subset = self.data_set.create_subset(class_label, class_value)
             child = Node(child_subset, class_label, class_value)
             self.children_list.append(child)
+
+    def traverse(self, height=0):
+        print('\n')
+        print("---- Node Class: " + str(self.class_label))
+        print("     Node Value: " + str(self.class_value))
+        print("---- Node Height: " + str(height))
+        for child in self.children_list:
+            child.traverse(height+1)
+
