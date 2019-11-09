@@ -28,7 +28,7 @@ class DecisionAlgorithm():
         return max_gain_attribute_idx
 
     def calculate_entropy(self, class_values=None, base=None):
-        class_values = self.data_set[:,0] if class_values is None else class_values
+        class_values = self.data_set[:, 0] if class_values is None else class_values
         # base Shannon as default
         base = 2 if base is None else base
 
@@ -47,7 +47,7 @@ class DecisionAlgorithm():
             total_count = counts.sum()
             reduced_matrix = data_set[:, [0, col]]  # Matrix with only class and current columns
             for value, count in zip(unique_values, counts):
-                value_rows = reduced_matrix[np.where(reduced_matrix[:, 1] == value)]  # Matrix of rows with current value
+                value_rows = reduced_matrix[np.where(reduced_matrix[:, 1] == value)]  # Matrix of rows with current val
                 gain_list[col] -= count / total_count * self.calculate_entropy(value_rows[:, 0], 2)
 
         return gain_list
