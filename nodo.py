@@ -22,6 +22,7 @@ class Nodo():
         self.categoriaNodo = categoriaNodo
         self.finalFulla = False
         self.contadorBucle = contadorBucle
+        self.valorClase="" ##aqui guardaremos el valor para cuando ya signifique sea edible o venenosa para todos sus hijos
 
         self._init_debugexiste()  ###pruebas
         self._init_clasificaEntropia()
@@ -30,16 +31,14 @@ class Nodo():
     def _init_debugexiste(self):  ##funcion solo para debuggin
         listadebug = []
         for elemento in self.dataHijos:
-            if (elemento[14] == 'g') and (
-                    elemento[8] == 'n'):  # añadir en el if cualquier campo que quieras comprobar si existe o no
+            if (elemento[5] == 'p' and elemento[0]=='e'):  # añadir en el if cualquier campo que quieras comprobar si existe o no
                 listadebug.append(elemento)
-        print("Lista debug:")
-        print
-        listadebug
-        print("------")
+#        print("Lista debug:")
+#        print listadebug
+#        print("------")
 
     def _init_clasificaEntropia(self):
-        print("categoriaNodo: " + str(self.categoriaNodo))
+        print("Creamos NODO de categoria:: ---------" + str(self.categoriaNodo)+"--------")
         print("Contador h: " + str(self.contadorBucle))
         for elemento in self.dataHijos:
             i = 0
@@ -52,16 +51,18 @@ class Nodo():
 #        print self.listaDicVen
 #        print("-----")
 #
-#        print("Data set inical:")  # para ver en pantalla con que datos trabajara guany
-#        print self.listaDicEd
-#        print("-----")
-#        print self.listaDicVen
-#        print("-----")                
-                    
-                    
-                    
-        self.atributoSelec = self.guany() + 1
-        print ("seleccionamos de la tabla datos contando la columna 1 : "+str(self.atributoSelec))
+        print("LEN------------------ Data set inical:")  # para ver en pantalla con que datos trabajara guany
+        print len(self.listaDicEd)
+        print("-----")
+        print len(self.listaDicVen)
+        print("-----")                
+        if ((len(self.listaDicEd) > 0) and (len(self.listaDicVen)>0)):                    
+            self.atributoSelec = self.guany() + 1
+            print ("seleccionamos de la tabla datos contando la columna 1 : "+str(self.atributoSelec))
+
+        else:
+            self.finalFulla=True
+            print ("es final de fulla---")
 #        print self.dataHijos[1]
 
 
@@ -95,10 +96,12 @@ class Nodo():
         St = 0
         H_menor = 10000
         Atributo = 0
-        print("funcio guany")
+        print("funcio guany de nodo "+str(self.categoriaNodo))
         print("Data set inical:")  # para ver en pantalla con que datos trabajara guany
+        print("-----Comestibles:")
+
         print self.listaDicEd
-        print("-----")
+        print("-----Venenosas:")
         print self.listaDicVen
         print("-----")
 
@@ -155,39 +158,41 @@ class Nodo():
         return Atributo
 
     def crearHijos(self):
-        print("FUNCION Creamos hijos------")
-        print("h: num " + str(self.contadorBucle))
+#        print("FUNCION Creamos hijos------ en el futuro candidato nodo padre: "+str(self.categoriaNodo))
+#        print("h: num " + str(self.contadorBucle))
         datosAuxHijosCat = []
         #        for elemento in self.dataHijos:        "no quitaremos el elemento para facilitar el prog"
         #            elemento.pop(self.atributoSelec)
         #        if self.finalFulla==False:
-        if (len(self.listaDicEd) > 0) and (len(self.listaDicVen) > 0):
-            print("Columnna seleccionada: " + str(self.atributoSelec))
-            print("lsitaKeys")
-            print self.listaKeys
-            print ("----")
+        if self.finalFulla==False:
+#            print("Columnna seleccionada: " + str(self.atributoSelec))
+#            print("lsitaKeys")
+#            print self.listaKeys
+#            print ("----")
 
             for campo in self.listaKeys[self.atributoSelec-1]:
                 for elemento in self.dataHijos:
-                    #                    print elemento[self.atributoSelec]
                     if elemento[self.atributoSelec] == campo:
-                        #                        print("es igual")
                         datosAuxHijosCat.append(elemento)
-
-                if (self.contadorBucle <= 100):  ##para cortar la profunidad en 3 para el debug
+                        
+                if (self.contadorBucle <= 20):  ##para cortar la profunidad en 3 para el debug
                     print("Creamos hijo para el campo: " + str(campo) + " de la columna " + str(self.atributoSelec))
-                    print("Estamos en" + str(self.categoriaNodo) + " la cual tiene " + str(
+                    print("Estamos en " + str(self.categoriaNodo) + " la cual tiene " + str(
                         len(self.listaKeys[self.atributoSelec - 1])) + " hijos")
 
                     self.dicHijos.append(
                         [self.atributoSelec, Nodo(datosAuxHijosCat, self.listaKeys, campo, self.contadorBucle + 1)])
-                    print("Funcion hijos TERMINADA en h: " + str(self.contadorBucle))
+                    print("Iteracion  hijos TERMINADA en h: " + str(self.contadorBucle)+"y nodo: "+str(self.categoriaNodo))
                 datosAuxHijosCat = []
         else:
-            print("No creamos mas hijos")
+            if len(self.listaDicEd)==0:
+                self.valorClase='p'
+            if len(self.listaDicVen)==0:
+                self.valorClase='e'
+            print("No creamos mas hijos, las setas a partir de aqui son: "+str(self.valorClase) )
 
     def recorreNodes(self):
-        print("Nodo: " + str(self.categoriaNodo))
+        print("     Nodo: ----" + str(self.categoriaNodo) +"---- h en: "+str(self.contadorBucle))
         for element in self.dicHijos:
-            print("Hijo de " + str(self.categoriaNodo) + ": ")
+            print("Hijo de " + str(self.categoriaNodo) + ": " +"con seleccion:" +str(self.atributoSelec))
             element[1].recorreNodes()
