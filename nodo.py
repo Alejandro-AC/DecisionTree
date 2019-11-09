@@ -48,7 +48,23 @@ class Nodo():
                     self.procesarVen(elemento[i], i)
                 else:
                     self.procesarNoVen(elemento[i], i)
+#        print("venenosos procesados, lista:")
+#        print self.listaDicVen
+#        print("-----")
+#
+#        print("Data set inical:")  # para ver en pantalla con que datos trabajara guany
+#        print self.listaDicEd
+#        print("-----")
+#        print self.listaDicVen
+#        print("-----")                
+                    
+                    
+                    
         self.atributoSelec = self.guany() + 1
+        print ("seleccionamos de la tabla datos contando la columna 1 : "+str(self.atributoSelec))
+#        print self.dataHijos[1]
+
+
 
     def procesarVen(self, atribut, pos):
 
@@ -56,9 +72,12 @@ class Nodo():
             self.listaDicVen.append({atribut: 0})
         else:
             if atribut in self.listaDicVen[pos - 1]:
+                ##print("entra "+str(atribut))
                 self.listaDicVen[pos - 1][atribut] = self.listaDicVen[pos - 1][atribut] + 1
             else:
                 self.listaDicVen[pos - 1][atribut] = 0
+
+
 
     def procesarNoVen(self, atribut, pos):
         if len(self.listaDicEd) < pos:
@@ -76,12 +95,11 @@ class Nodo():
         St = 0
         H_menor = 10000
         Atributo = 0
+        print("funcio guany")
         print("Data set inical:")  # para ver en pantalla con que datos trabajara guany
-        print
-        self.listaDicEd
+        print self.listaDicEd
         print("-----")
-        print
-        self.listaDicVen
+        print self.listaDicVen
         print("-----")
 
         if len(
@@ -105,15 +123,22 @@ class Nodo():
                 if (len(listaC) != 0):
                     H = 0
                     for j in listaC:
+                        
                         veneno = float(self.listaDicVen[i][j])
                         comestible = float(self.listaDicEd[i][j])
                         # H = 0
                         a = 0
                         St = veneno + comestible
+                        if (veneno==0 or comestible==0):
+                            print("veneno: "+str(veneno))
+                            print("comestible:"+str(comestible))
+                            print("da igual a 0")
+                            return 1
+                        else:
 
-                        a = a - (veneno / St) * m.log((veneno / St), 2)
-                        a = a - (comestible / St) * m.log((comestible / St), 2)
-                        H = H + (St / Total) * a
+                            a = a - (veneno / St) * m.log((veneno / St), 2)
+                            a = a - (comestible / St) * m.log((comestible / St), 2)
+                            H = H + (St / Total) * a
                 else:
                     H = 0
                 if (H < H_menor) and (H > 0):
@@ -137,16 +162,19 @@ class Nodo():
         #            elemento.pop(self.atributoSelec)
         #        if self.finalFulla==False:
         if (len(self.listaDicEd) > 0) and (len(self.listaDicVen) > 0):
-            print("Columnna seleccionada: " + str(self.atributoSelec + 1))
+            print("Columnna seleccionada: " + str(self.atributoSelec))
+            print("lsitaKeys")
+            print self.listaKeys
+            print ("----")
 
-            for campo in self.listaKeys[self.atributoSelec]:
+            for campo in self.listaKeys[self.atributoSelec-1]:
                 for elemento in self.dataHijos:
                     #                    print elemento[self.atributoSelec]
                     if elemento[self.atributoSelec] == campo:
                         #                        print("es igual")
                         datosAuxHijosCat.append(elemento)
 
-                if (self.contadorBucle <= 2):  ##para cortar la profunidad en 3 para el debug
+                if (self.contadorBucle <= 100):  ##para cortar la profunidad en 3 para el debug
                     print("Creamos hijo para el campo: " + str(campo) + " de la columna " + str(self.atributoSelec))
                     print("Estamos en" + str(self.categoriaNodo) + " la cual tiene " + str(
                         len(self.listaKeys[self.atributoSelec - 1])) + " hijos")
