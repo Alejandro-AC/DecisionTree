@@ -3,7 +3,7 @@ import DataSet as ds
 import numpy as np
 
 
-class Node():
+class Node:
 
     def __init__(self, data_set, class_label=None, class_value=None):
         self.children_list = []

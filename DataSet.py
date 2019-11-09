@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class DataSet():
+class DataSet:
     # TODO
     labels_possible_values = {}  # class variable, added manually?
 
@@ -19,5 +19,5 @@ class DataSet():
 
             return DataSet(subset_data, subset_labels)
 
-        print('ERROR creating Sub set')
+        print('ERROR creating SubSet')
         return -1

@@ -3,7 +3,7 @@ import DataSet as ds
 import numpy as np
 
 
-class DecisionTree():
+class DecisionTree:
 
     def __init__(self, file_name):
         self.data_set = None

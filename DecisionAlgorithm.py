@@ -1,10 +1,7 @@
 import numpy as np
-import math
-from math import log, e
-from collections import Counter
 
 
-class DecisionAlgorithm():
+class DecisionAlgorithm:
 
     def __init__(self, algorithm, data_set):
         self.algorithm = algorithm
