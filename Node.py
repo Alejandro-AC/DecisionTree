@@ -26,11 +26,11 @@ class Node:
             child = Node(child_subset, class_label, class_value)
             self.children_list.append(child)
 
-    def traverse(self, height=0):
+    def traverse(self, depth=0):
         print('\n')
-        print("---- Node Class: " + str(self.class_label))
-        print("     Node Value: " + str(self.class_value))
-        print("---- Node Height: " + str(height))
+        print("".rjust(depth * 3, '-') + " Node Class: " + str(self.class_label))
+        print("".rjust(depth * 3, ' ') + " Node Value: " + str(self.class_value))
+        print("".rjust(depth * 3, '-') + " Node Depth: " + str(depth))
         for child in self.children_list:
-            child.traverse(height+1)
+            child.traverse(depth + 1)
 
