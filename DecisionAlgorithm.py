@@ -17,15 +17,15 @@ class DecisionAlgorithm():
         if algorithm is 'ID3':
             return self.decide_id3(data_set)
         else:
-            return 0
+            return -1
 
     def decide_id3(self, data_set):
         base_entropy = self.calculate_entropy(data_set[:, 0], 0)
 
-        attribute_gain_list = self.calculate_gain(data_set, base_entropy)
-        max_gain_attribute_idx = np.argmax(attribute_gain_list)
+        attribute_gain_list = self.calculate_gain(base_entropy, data_set)
+        max_gain_attribute_idx = np.argmax(attribute_gain_list[1:])
 
-        return data_set.headers[max_gain_attribute_idx]
+        return max_gain_attribute_idx
 
     def calculate_entropy(self, class_values=None, base=None):
         class_values = self.data_set[:,0] if class_values is None else class_values
