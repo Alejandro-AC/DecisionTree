@@ -26,7 +26,7 @@ class Testing(unittest.TestCase):
         print(data_set_1)
 
         print('\n LABELS')
-        data_labels_1 =['PlayTennis', 'Outlook', 'Temperature', 'Humidity', 'Wind']
+        data_labels_1 = ['PlayTennis', 'Outlook', 'Temperature', 'Humidity', 'Wind']
         print(data_labels_1)
 
         dataset = ds.DataSet(data_set_1, data_labels_1)
@@ -94,7 +94,6 @@ class Testing(unittest.TestCase):
         print('\n\n RESULT SUBSET')
         with self.assertRaises(ValueError):
             dataset.create_subset('N/A', 'N/A')
-
 
 
 if __name__ == '__main__':

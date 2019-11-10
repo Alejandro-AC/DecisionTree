@@ -13,15 +13,12 @@ class DecisionTree:
         self.create_root()
 
     def create_data_set(self, file_name):
-        print("\n     CREATING DATA SET")
         data = np.loadtxt(file_name, delimiter=',', dtype=str)
         labels = list(ds.DataSet.labels_possible_values.keys())
-        print("\n  LABELS")
-        print(labels)
 
         self.data_set = ds.DataSet(data, labels)
-        print("\n  DATA")
-        print(self.data_set.data)
+
+        self.print()
 
     def create_root(self):
         self.root = nd.Node(self.data_set)
@@ -29,3 +26,11 @@ class DecisionTree:
     def traverse_tree(self):
         print("\n\n   TREE TRAVERSE")
         self.root.traverse()
+
+    def print(self):
+        print("\n     CREATING DATA SET")
+        print("\n  LABELS")
+        print(self.data_set.labels)
+        print("\n  DATA")
+        print(self.data_set.data)
+

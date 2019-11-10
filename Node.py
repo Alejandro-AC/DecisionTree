@@ -27,11 +27,15 @@ class Node:
             self.children_list.append(child)
 
     def traverse(self, depth=0):
+        self.print(depth)
+
+        for child in self.children_list:
+            child.traverse(depth + 1)
+
+    def print(self, depth):
         print('\n')
         print("".rjust(depth * 3, '-') + " Node Class: " + str(self.class_label))
         print("".rjust(depth * 3, ' ') + " Node Value: " + str(self.class_value))
         print("".rjust(depth * 3, '-') + " Node Depth: " + str(depth))
         print(self.data_set.data)
-        for child in self.children_list:
-            child.traverse(depth + 1)
 

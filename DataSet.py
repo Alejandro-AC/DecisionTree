@@ -20,5 +20,5 @@ class DataSet:
 
             return DataSet(subset_data, subset_labels)
 
-        print('ERROR creating SubSet')
+        print(' ERROR creating SubSet')
         return -1
