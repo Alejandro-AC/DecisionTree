@@ -18,7 +18,7 @@ class Node:
             self.create_children()
 
     def create_children(self):
-        class_label_idx = self.decision_algorithm.decide_class()
+        class_label_idx = self.decision_algorithm.decide_class(data_set=self.data_set.data)
         class_label = self.data_set.labels[class_label_idx]
 
         for class_value in ds.DataSet.labels_possible_values[class_label]:
@@ -31,6 +31,7 @@ class Node:
         print("".rjust(depth * 3, '-') + " Node Class: " + str(self.class_label))
         print("".rjust(depth * 3, ' ') + " Node Value: " + str(self.class_value))
         print("".rjust(depth * 3, '-') + " Node Depth: " + str(depth))
+        print(self.data_set.data)
         for child in self.children_list:
             child.traverse(depth + 1)
 
