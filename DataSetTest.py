@@ -26,7 +26,7 @@ class Testing(unittest.TestCase):
         print(data_set_1)
 
         print('\n LABELS')
-        data_labels_1 = np.array(['PlayTennis', 'Outlook', 'Temperature', 'Humidity', 'Wind'])
+        data_labels_1 =['PlayTennis', 'Outlook', 'Temperature', 'Humidity', 'Wind']
         print(data_labels_1)
 
         dataset = ds.DataSet(data_set_1, data_labels_1)
@@ -41,11 +41,11 @@ class Testing(unittest.TestCase):
         print(result.labels)
 
         expected_labels = ['PlayTennis', 'Temperature', 'Humidity', 'Wind']
-        expected_data = [['No', 'Sunny', 'Hot', 'High', 'Weak'],
-                         ['No', 'Sunny', 'Hot', 'High', 'Strong'],
-                         ['No', 'Sunny', 'Mild', 'High', 'Weak'],
-                         ['Yes', 'Sunny', 'Cool', 'Normal', 'Weak'],
-                         ['Yes', 'Sunny', 'Mild', 'Normal', 'Strong']
+        expected_data = [['No', 'Hot', 'High', 'Weak'],
+                         ['No', 'Hot', 'High', 'Strong'],
+                         ['No', 'Mild', 'High', 'Weak'],
+                         ['Yes', 'Cool', 'Normal', 'Weak'],
+                         ['Yes', 'Mild', 'Normal', 'Strong']
                          ]
 
         np.testing.assert_array_equal(expected_labels, result.labels)
@@ -61,13 +61,13 @@ class Testing(unittest.TestCase):
         print(result.labels)
 
         expected_labels = ['PlayTennis', 'Outlook', 'Temperature', 'Wind']
-        expected_data = [['No', 'Sunny', 'Hot', 'High', 'Weak'],
-                         ['No', 'Sunny', 'Hot', 'High', 'Strong'],
-                         ['Yes', 'Overcast', 'Hot', 'High', 'Weak'],
-                         ['Yes', 'Rain', 'Mild', 'High', 'Weak'],
-                         ['No', 'Sunny', 'Mild', 'High', 'Weak'],
-                         ['Yes', 'Overcast', 'Mild', 'High', 'Strong'],
-                         ['No', 'Rain', 'Mild', 'High', 'Strong']
+        expected_data = [['No', 'Sunny', 'Hot', 'Weak'],
+                         ['No', 'Sunny', 'Hot', 'Strong'],
+                         ['Yes', 'Overcast', 'Hot', 'Weak'],
+                         ['Yes', 'Rain', 'Mild', 'Weak'],
+                         ['No', 'Sunny', 'Mild', 'Weak'],
+                         ['Yes', 'Overcast', 'Mild', 'Strong'],
+                         ['No', 'Rain', 'Mild', 'Strong']
                          ]
 
         np.testing.assert_array_equal(expected_labels, result.labels)
@@ -92,7 +92,8 @@ class Testing(unittest.TestCase):
         print('\n Class: NonExistant Class')
         print(' Value: N/A')
         print('\n\n RESULT SUBSET')
-        self.assertRaises(TypeError, dataset.create_subset('N/A', 'N/A'))
+        with self.assertRaises(ValueError):
+            dataset.create_subset('N/A', 'N/A')
 
 
 

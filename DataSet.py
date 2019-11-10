@@ -16,6 +16,7 @@ class DataSet:
         if column:
             subset_data = data[data[:, column] == class_value]
             subset_labels = self.labels[:column] + self.labels[column + 1:]
+            subset_data = np.delete(subset_data, column, 1)
 
             return DataSet(subset_data, subset_labels)
 

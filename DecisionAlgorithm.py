@@ -14,13 +14,14 @@ class DecisionAlgorithm:
         if algorithm is 'ID3':
             return self.decide_id3(data_set)
         else:
+            print(" INVALID algorithm for decision")
             return -1
 
     def decide_id3(self, data_set):
         base_entropy = self.calculate_entropy(data_set[:, 0])
 
         attribute_gain_list = self.calculate_gain(base_entropy, data_set)
-        max_gain_attribute_idx = np.argmax(attribute_gain_list[1:])  # Exclude first since it's the class
+        max_gain_attribute_idx = np.argmax(attribute_gain_list[1:]) + 1  # Exclude first since it's the class
 
         return max_gain_attribute_idx
 
