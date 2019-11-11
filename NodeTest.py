@@ -2,6 +2,9 @@ import unittest
 import DataSet as ds
 import Node as nd
 import numpy as np
+from graphviz import Digraph
+import os
+os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 
 class Testing(unittest.TestCase):
@@ -41,7 +44,13 @@ class Testing(unittest.TestCase):
 
         print('\n TEST CASE 1')
         node.create_children()
-        node.traverse(0)
+
+        g = Digraph('DecisionTree', format='png', filename='test-output/decisionTree.gv')
+        g.attr('node', shape='box')
+
+        node.traverse(g, 0)
+
+        g.render()
 
 
 if __name__ == '__main__':

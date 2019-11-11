@@ -1,6 +1,9 @@
 import Node as nd
 import DataSet as ds
 import numpy as np
+from graphviz import Digraph
+import os
+os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 
 class DecisionTree:
@@ -25,7 +28,13 @@ class DecisionTree:
 
     def traverse_tree(self):
         print("\n\n   TREE TRAVERSE")
-        self.root.traverse()
+        self.root.traverse(self.create_graph)
+
+        g.render(view=True)
+
+    def create_graph(self):
+        g = Digraph('DecisionTree', format='png', filename='decisionTree.gv')
+        g.attr('node', shape='box')
 
     def print(self):
         print("\n     CREATING DATA SET")

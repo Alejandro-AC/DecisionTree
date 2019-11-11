@@ -20,17 +20,22 @@ class Node:
     def create_children(self):
         class_label_idx = self.decision_algorithm.decide_class(data_set=self.data_set.data)
         class_label = self.data_set.labels[class_label_idx]
+        self.class_label = class_label
 
         for class_value in ds.DataSet.labels_possible_values[class_label]:
             child_subset = self.data_set.create_subset(class_label, class_value)
-            child = Node(child_subset, class_label, class_value)
+            child = Node(child_subset, None, class_value)
             self.children_list.append(child)
 
-    def traverse(self, depth=0):
+    def traverse(self, graph, depth=0):
         self.print(depth)
 
+        current_graph_node = graph.node(str(id(self)), label=str(self.class_label))
+
         for child in self.children_list:
-            child.traverse(depth + 1)
+            current_graph_node = graph.node(str(id(child)), label=str(child.class_label))
+            graph.edge(str(id(self)), str(id(child)), label=str(child.class_value))
+            child.traverse(graph, depth + 1)
 
     def print(self, depth):
         print('\n')
