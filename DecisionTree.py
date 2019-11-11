@@ -28,13 +28,12 @@ class DecisionTree:
 
     def traverse_tree(self):
         print("\n\n   TREE TRAVERSE")
-        self.root.traverse(self.create_graph)
-
-        g.render(view=True)
-
-    def create_graph(self):
         g = Digraph('DecisionTree', format='png', filename='decisionTree.gv')
         g.attr('node', shape='box')
+
+        self.root.traverse(g)
+
+        g.render(view=True)
 
     def print(self):
         print("\n     CREATING DATA SET")
