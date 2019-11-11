@@ -43,7 +43,6 @@ class Testing(unittest.TestCase):
         node = nd.Node(dataset)
 
         print('\n TEST CASE 1')
-        node.create_children()
 
         g = Digraph('DecisionTree', format='png', filename='test-output/decisionTree.gv')
         g.attr('node', shape='box')
