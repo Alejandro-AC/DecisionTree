@@ -104,3 +104,9 @@ venv.bak/
 .mypy_cache/
 
 \.idea/
+
+test-output/
+
+*.png
+
+*.gv
