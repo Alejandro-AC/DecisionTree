@@ -13,6 +13,10 @@ class DecisionAlgorithm:
 
         if algorithm is 'ID3':
             return self.decide_id3(data_set)
+        elif algorithm is 'C4.5':
+            return self.decide_c45(data_set)
+        elif algorithm is 'Gini':
+            return self.decide_gini(data_set)
         else:
             print(" INVALID algorithm for decision")
             return -1
@@ -24,6 +28,27 @@ class DecisionAlgorithm:
         max_gain_attribute_idx = np.argmax(attribute_gain_list[1:]) + 1  # Exclude first since it's the class
 
         return max_gain_attribute_idx
+
+    def decide_c45(self, data_set):
+        base_entropy = self.calculate_entropy(data_set[:, 0])
+        attribute_gain_list = self.calculate_gain(base_entropy, data_set)
+        attribute_split_info_list = self.calculate_split_info(base_entropy, data_set)
+
+        attribute_gain_ratio_list = self.calculate_gain_ratio(attribute_gain_list, attribute_split_info_list)
+        max_gain_ratio_attribute_idx = np.argmax(
+            attribute_gain_ratio_list[1:]) + 1  # Exclude first since it's the class
+
+        return max_gain_ratio_attribute_idx
+
+    def decide_gini(self, data_set):
+        base_entropy = self.calculate_entropy(data_set[:, 0])
+        attribute_gini_list = self.calculate_gini(base_entropy, data_set)
+
+        attribute_gini_gain_list = self.calculate_gini_gain(attribute_gini_list, data_set)
+        max_gini_gain_attribute_idx = np.argmax(
+            attribute_gini_gain_list[1:]) + 1  # Exclude first since it's the class
+
+        return max_gini_gain_attribute_idx
 
     def calculate_entropy(self, class_values=None, base=None):
         class_values = self.data_set[:, 0] if class_values is None else class_values
@@ -49,3 +74,25 @@ class DecisionAlgorithm:
                 gain_list[col] -= count / total_count * self.calculate_entropy(value_rows[:, 0], 2)
 
         return gain_list
+
+    def calculate_split_info(self, base_entropy, data_set):
+        split_info_list = [base_entropy] * data_set.shape[1]
+
+        # TODO
+
+        return split_info_list
+
+    def calculate_gain_ratio(self, gain_list, split_info_list):
+
+        return [gain / split_info for gain, split_info in zip(gain_list, split_info_list)]
+
+    def calculate_gini(self, base_entropy, data_set):
+
+        # TODO
+
+        return []
+
+    def calculate_gini_gain(self, gain_list, split_info_list):
+        # TODO
+
+        return []
