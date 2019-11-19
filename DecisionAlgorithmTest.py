@@ -6,7 +6,7 @@ import numpy as np
 class Testing(unittest.TestCase):
 
     def test_entropy_shannon(self):
-        decision_algorithm_id3 = da.DecisionAlgorithm('C45', None)
+        decision_algorithm_id3 = da.DecisionAlgorithm('Gini', None)
         values_1 = ['e', 'e', 'e', 'e', 'e', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f']
 
         expected = 0.94
