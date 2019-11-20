@@ -68,6 +68,3 @@ if __name__ == '__main__':
     print()
 
     eval = ev.Evaluation(dirFichero, 'C45', 'Holdout')
-
-    #arbol = eval.decision_tree
-    #arbol.traverse_tree()
