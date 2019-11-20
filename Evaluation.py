@@ -14,6 +14,7 @@ class Evaluation:
 
         self.evaluate()
         self.print_confusion_matrix()
+        self.print_metrics()
 
     def create_data_set(self, file_name):  # assuming class is first column and columns separated by ',' commas
         data = np.loadtxt(file_name, delimiter=',', dtype=str)
@@ -35,22 +36,6 @@ class Evaluation:
 
         confusion_matrix = self.generate_confusion_matrix(self.decision_tree, self.test_set)
         self.confusion_matrix = confusion_matrix
-
-        if confusion_matrix.shape[0] == 2:  # Binary classification
-
-            true_positive = confusion_matrix[0][0]
-            true_negative = confusion_matrix[1][1]
-            false_positive = confusion_matrix[1][0]
-            false_negative = confusion_matrix[0][1]
-
-            num_classified_samples = true_positive + true_negative + false_positive + false_negative
-
-            accuracy = (true_positive + true_negative) / num_classified_samples
-            precision = true_positive / (true_positive + false_positive)
-            recall = true_positive / (true_positive + false_negative)  # True positive recognition rate
-            specificity = true_negative / (true_negative + false_positive)  # True negative recognition rate
-
-            f_measure = 2 * true_positive / (2 * true_positive + false_positive + false_negative)
 
     def holdout_partitioning(self, data_set, training_set_percentage=None):
         training_set_percentage = 0.66 if training_set_percentage is None else training_set_percentage
@@ -86,3 +71,34 @@ class Evaluation:
     def print_confusion_matrix(self):
         print(self.confusion_matrix)
 
+    def print_metrics(self):
+        if self.confusion_matrix.shape[0] == 2:  # Binary classification
+
+            true_positive = self.confusion_matrix[0][0]
+            true_negative = self.confusion_matrix[1][1]
+            false_positive = self.confusion_matrix[1][0]
+            false_negative = self.confusion_matrix[0][1]
+
+            num_classified_samples = true_positive + true_negative + false_positive + false_negative
+
+            accuracy = (true_positive + true_negative) / num_classified_samples
+            precision = true_positive / (true_positive + false_positive)
+            recall = true_positive / (true_positive + false_negative)  # True positive recognition rate
+            specificity = true_negative / (true_negative + false_positive)  # True negative recognition rate
+
+            f_measure = 2 * true_positive / (2 * true_positive + false_positive + false_negative)
+
+            print()
+            print('TP: ' + str(true_positive))
+            print('TN: ' + str(true_negative))
+            print('FP: ' + str(false_positive))
+            print('FN: ' + str(false_negative))
+            print()
+            print('Number of samples: ' + str(num_classified_samples))
+            print()
+            print('accuracy: ' + str(accuracy))
+            print('precision: ' + str(precision))
+            print('recall: ' + str(recall))
+            print('specificity: ' + str(specificity))
+            print()
+            print('f_measure: ' + str(f_measure))
