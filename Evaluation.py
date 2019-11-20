@@ -75,8 +75,24 @@ class Evaluation:
         return confusion_matrix
 
     def print_confusion_matrix(self):
-        print(ds.DataSet.labels_possible_values_list[0][1])
-        print(self.confusion_matrix)
+
+        max_len = len(str(max(max(i) for i in self.confusion_matrix)))
+        labels = list(ds.DataSet.labels_possible_values_list[0][1])
+        num_total = self.confusion_matrix.sum()
+
+        print('\n\n    Real / Prediction\n')
+        print('     ' + "  ".join([str(l).rjust(max_len) for l in ds.DataSet.labels_possible_values_list[0][1]]))
+        for value, label in zip(self.confusion_matrix, labels):
+            print(str(label) + '    ' + "  ".join([str(l).rjust(max_len) for l in value]))
+
+        print('\n Total: ' + str(num_total))
+
+        print('\n\n    Real / Prediction\n')
+        print('     ' + "  ".join([str(l).rjust(max_len) for l in ds.DataSet.labels_possible_values_list[0][1]]))
+        for value, label in zip(self.confusion_matrix, labels):
+            print(str(label) + '    ' + "  ".join([(str(round(l/num_total*100))+'%').rjust(max_len) for l in value]))
+
+        print('\n Total: ' + str(num_total))
         
 
     def print_metrics(self):
