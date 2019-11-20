@@ -7,6 +7,7 @@ import random
 class Evaluation:
 
     def __init__(self, file_name, decision_algorithm, partitioning_method):
+        
         self.data_set = self.create_data_set(file_name)
         self.training_set, self.test_set = self.generate_data_sets(self.data_set, partitioning_method)
         self.decision_tree = dt.DecisionTree(self.training_set, decision_algorithm)
@@ -19,8 +20,10 @@ class Evaluation:
     def create_data_set(self, file_name):  # assuming class is first column and columns separated by ',' commas
         data = np.loadtxt(file_name, delimiter=',', dtype=str)
         labels = list(ds.DataSet.labels_possible_values.keys())
+        data_set = ds.DataSet(data, labels)
+        data_set.remove_lines_with_missing_values()
 
-        return ds.DataSet(data, labels)
+        return data_set
 
     def generate_data_sets(self, data_set, partitioning_method=None):
         partitioning_method = 'Holdout' if None else partitioning_method
@@ -50,6 +53,9 @@ class Evaluation:
 
     def cross_validation_partitioning(self, data_set):
 
+        
+        
+        
         return [0], [0]
 
     def bootstrap_partitioning(self, data_set):
@@ -69,7 +75,9 @@ class Evaluation:
         return confusion_matrix
 
     def print_confusion_matrix(self):
+        print(ds.DataSet.labels_possible_values_list[0][1])
         print(self.confusion_matrix)
+        
 
     def print_metrics(self):
         if self.confusion_matrix.shape[0] == 2:  # Binary classification

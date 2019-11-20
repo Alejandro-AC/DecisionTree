@@ -64,10 +64,10 @@ if __name__ == '__main__':
         ['population', ['a', 'c', 'n', 's', 'v', 'y']],
         ['habitat', ['g', 'l', 'm', 'p', 'u', 'w', 'd']]
     ])
-
+    ds.DataSet.missing_value_indicator='?'
     print()
 
-    eval = ev.Evaluation(dirFichero, 'ID3', 'Holdout')
+    eval = ev.Evaluation(dirFichero, 'C45', 'Holdout')
 
     #arbol = eval.decision_tree
     #arbol.traverse_tree()

@@ -12,7 +12,7 @@ class DecisionAlgorithm:
 
         if algorithm is 'ID3':
             return self.decide_id3(data_set)
-        elif algorithm is 'C4.5':
+        elif algorithm is 'C45':
             return self.decide_c45(data_set)
         elif algorithm is 'Gini':
             return self.decide_gini(data_set)
@@ -42,7 +42,7 @@ class DecisionAlgorithm:
     def decide_gini(self, data_set):
         base_gini = self.calculate_gini(data_set[:, 0])
 
-        attribute_gini_gain_list = self.calculate_gini(base_gini, data_set, gini=True)
+        attribute_gini_gain_list = self.calculate_gain(base_gini, data_set, gini=True)
         max_gini_gain_attribute_idx = np.argmax(
             attribute_gini_gain_list[1:]) + 1  # Exclude first since it's the class
 
