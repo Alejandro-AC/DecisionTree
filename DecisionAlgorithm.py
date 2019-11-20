@@ -3,13 +3,12 @@ import numpy as np
 
 class DecisionAlgorithm:
 
-    def __init__(self, algorithm, data_set):
+    def __init__(self, algorithm, data_set=None):
         self.algorithm = algorithm
         self.data_set = data_set
 
-    def decide_class(self, algorithm=None, data_set=None):
+    def decide_class(self, data_set, algorithm=None):
         algorithm = self.algorithm if algorithm is None else algorithm
-        data_set = self.data_set if data_set is None else data_set
 
         if algorithm is 'ID3':
             return self.decide_id3(data_set)
@@ -32,7 +31,7 @@ class DecisionAlgorithm:
     def decide_c45(self, data_set):
         base_entropy = self.calculate_entropy(data_set[:, 0])
         attribute_gain_list = self.calculate_gain(base_entropy, data_set)
-        attribute_split_info_list = self.calculate_split_info(base_entropy, data_set)
+        attribute_split_info_list = self.calculate_split_info(data_set)
 
         attribute_gain_ratio_list = self.calculate_gain_ratio(attribute_gain_list, attribute_split_info_list)
         max_gain_ratio_attribute_idx = np.argmax(
@@ -78,7 +77,7 @@ class DecisionAlgorithm:
 
         return gain_list
 
-    def calculate_split_info(self, base_entropy, data_set):
+    def calculate_split_info(self, data_set):
 
         split_info_list = [0] * data_set.shape[1]
         num_columns = data_set.shape[1]

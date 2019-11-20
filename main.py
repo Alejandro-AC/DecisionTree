@@ -7,12 +7,14 @@ Created on Thu Nov  7 17:56:23 2019
 
 import DecisionTree as dt
 import DataSet as ds
+import Evaluation as ev
+import numpy as np
 
 if __name__ == '__main__':
     dirFichero = 'data/agaricus-lepiota.data'
 
     ds.DataSet.labels_possible_values = {
-        'class': ['e'],
+        'class': ['e', 'p'],
         'cap-shape': ['b', 'c', 'x', 'f', 'k', 's'],
         'cap-surface': ['f', 'g', 'y', 's'],
         'cap-color': ['n', 'b', 'c', 'g', 'r', 'p', 'u', 'e', 'w', 'y'],
@@ -36,5 +38,36 @@ if __name__ == '__main__':
         'population': ['a', 'c', 'n', 's', 'v', 'y'],
         'habitat': ['g', 'l', 'm', 'p', 'u', 'w', 'd']
     }
-    arbol = dt.DecisionTree(dirFichero)
-    arbol.traverse_tree()
+
+    ds.DataSet.labels_possible_values_list = np.array([
+        ['class', ['e', 'p']],
+        ['cap-shape', ['b', 'c', 'x', 'f', 'k', 's']],
+        ['cap-surface', ['f', 'g', 'y', 's']],
+        ['cap-color', ['n', 'b', 'c', 'g', 'r', 'p', 'u', 'e', 'w', 'y']],
+        ['bruises?', ['t', 'f']],
+        ['odor', ['a', 'l', 'c', 'y', 'f', 'm', 'n', 'p', 's']],
+        ['gill-attachment', ['a', 'd', 'f', 'n']],
+        ['gill-spacing', ['c', 'w', 'd']],
+        ['gill-size', ['b', 'n']],
+        ['gill-color', ['k', 'n', 'b', 'h', 'g', 'r', 'o', 'p', 'u', 'e', 'w', 'y']],
+        ['stalk-shape', ['e', 't']],
+        ['stalk-root', ['b', 'c', 'u', 'e', 'z', 'r', '?']],
+        ['stalk-surface-above-ring', ['f', 'y', 'k', 's']],
+        ['stalk-surface-below-ring', ['f', 'y', 'k', 's']],
+        ['stalk-color-above-ring', ['n', 'b', 'c', 'g', 'o', 'p', 'e', 'w', 'y']],
+        ['stalk-color-below-ring', ['n', 'b', 'c', 'g', 'o', 'p', 'e', 'w', 'y']],
+        ['veil-type', ['p', 'u']],
+        ['veil-color', ['n', 'o', 'w', 'y']],
+        ['ring-number', ['n', 'o', 't']],
+        ['ring-type', ['c', 'e', 'f', 'l', 'n', 'p', 's', 'z']],
+        ['spore-print-color', ['k', 'n', 'b', 'h', 'r', 'o', 'u', 'w', 'y']],
+        ['population', ['a', 'c', 'n', 's', 'v', 'y']],
+        ['habitat', ['g', 'l', 'm', 'p', 'u', 'w', 'd']]
+    ])
+
+    print()
+
+    eval = ev.Evaluation(dirFichero, 'ID3', 'Holdout')
+
+    #arbol = eval.decision_tree
+    #arbol.traverse_tree()

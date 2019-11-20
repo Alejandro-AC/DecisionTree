@@ -2,6 +2,7 @@ import unittest
 import DataSet as ds
 import Node as nd
 import numpy as np
+import DecisionAlgorithm as da
 from graphviz import Digraph
 import os
 os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
@@ -40,7 +41,8 @@ class Testing(unittest.TestCase):
                                              'Humidity': ['High', 'Normal'],
                                              'Wind': ['Weak', 'Strong']
                                              }
-        node = nd.Node(dataset)
+        decision_algorithm = da.DecisionAlgorithm('ID3')
+        node = nd.Node(dataset, decision_algorithm)
 
         print('\n TEST CASE 1')
 

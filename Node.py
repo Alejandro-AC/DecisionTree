@@ -1,34 +1,33 @@
-import DecisionAlgorithm as da
 import DataSet as ds
 import numpy as np
 
 
 class Node:
 
-    def __init__(self, data_set, attribute_label=None, attribute_value=None):
+    def __init__(self, sub_data_set, decision_algorithm, attribute_label=None, attribute_value=None):
         self.children_list = []
-        self.data_set = data_set
+        self.data_set = sub_data_set
         self.attribute_label = attribute_label
         self.attribute_value = attribute_value
         self.num_samples = self.data_set.data.shape[0]
         self.class_values, self.class_counts = np.unique(self.data_set.data[:, 0], return_counts=True)
 
-        self.decision_algorithm = da.DecisionAlgorithm('ID3',
-                                                       self.data_set.data)  # TODO make it class/global variable of the Tree
+        self.decision_algorithm = decision_algorithm
 
-        # Check that there is more than 1 column (+ Class) and that Class has different values
-        if self.data_set.data.shape[1] > 2 and len(np.unique(self.data_set.data[:, 0])) > 1:
-            self.create_children()
+        self.create_children()
 
     def create_children(self):
-        class_label_idx = self.decision_algorithm.decide_class(data_set=self.data_set.data)
-        class_label = self.data_set.labels[class_label_idx]
-        self.attribute_label = class_label
+        # Check that there is more than 1 column (+ Class) and that Class has different values
+        if self.data_set.data.shape[1] > 2 and len(np.unique(self.data_set.data[:, 0])) > 1:
 
-        for class_value in ds.DataSet.labels_possible_values[class_label]:
-            child_subset = self.data_set.create_subset(class_label, class_value)
-            child = Node(child_subset, None, class_value)
-            self.children_list.append(child)
+            class_label_idx = self.decision_algorithm.decide_class(data_set=self.data_set.data)
+            class_label = self.data_set.labels[class_label_idx]
+            self.attribute_label = class_label
+
+            for class_value in ds.DataSet.labels_possible_values[class_label]:
+                child_subset = self.data_set.create_subset(class_label, class_value)
+                child = Node(child_subset, self.decision_algorithm, None, class_value)
+                self.children_list.append(child)
 
     def traverse(self, graph, depth=0):
         self.print(depth)
@@ -40,6 +39,17 @@ class Node:
             self.add_child_to_graph(child, graph)
 
             child.traverse(graph, depth + 1)
+
+    def get_child_by_attribute_value(self, attribute_value):
+        for child in self.children_list:
+            if child.attribute_value == attribute_value:
+                return child
+
+        print(' ERROR getting child by attribute - Non-existing value')
+        return -1
+
+    def get_most_common_class(self):
+        return self.class_values[np.argmax(self.class_counts)]
 
     def add_child_to_graph(self, child, graph):
         if not child.class_values.size:

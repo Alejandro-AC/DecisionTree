@@ -4,6 +4,8 @@ import numpy as np
 class DataSet:
     # TODO
     labels_possible_values = {}  # class variable, added manually?
+    labels_possible_values_list = [] # class variable, added manually?
+    missing_value_indicator = None
 
     def __init__(self, data, labels):
         self.data = data
@@ -22,3 +24,6 @@ class DataSet:
 
         print(' ERROR creating SubSet')
         return -1
+
+    def remove_lines_with_missing_values(self):
+        self.data = self.data[np.all(self.data != DataSet.missing_value_indicator, axis=1)]
