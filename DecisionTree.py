@@ -27,10 +27,11 @@ class DecisionTree:
             if child.num_samples == 0:
                 return node.get_most_common_class()
 
-            if not child.children_list:
-                return child.get_most_common_class()
-
             node = child
+
+        if not node.children_list:
+            return node.get_most_common_class()
+
 
         print('ERROR in classify - Unexpected code reached')
         return -1
