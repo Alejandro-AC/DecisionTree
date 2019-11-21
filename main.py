@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-'''
-Created on Thu Nov  7 17:56:23 2019
-
-@author: Ronny
-'''
 
 import DataSet as ds
 import argparse
@@ -75,8 +70,8 @@ if __name__ == '__main__':
         description="DataSet evaluation with DecisionAlgorithms"
     )
 
-    parser.add_argument('k', help="number of iterations for Cross-Validation or Bootstrap evaluation methods", type=int)
-    parser.add_argument('trainpercentage', help="Percentage of the dataset destined to the training subset", type=float)
+    parser.add_argument('-k', help="number of iterations for Cross-Validation or Bootstrap evaluation methods", type=int)
+    parser.add_argument('-trainpercentage', help="Percentage of the dataset destined to the training subset (Between 0 and 1)", type=float)
 
     parser.add_argument("-a", help="Use Advanced missing values processing", action="store_true")
     parser.add_argument("-l",
@@ -86,7 +81,7 @@ if __name__ == '__main__':
     parser.add_argument("-i", help="Use ID3 Decision Algorithm", action="store_true")
     parser.add_argument("-g", help="Use Gini Decision Algorithm", action="store_true")
 
-    parser.add_argument("-h", help="Use Holdout Evaluation method", action="store_true")
+    parser.add_argument("-o", help="Use Holdout Evaluation method", action="store_true")
     parser.add_argument("-v", help="Use Cross-Validation Evaluation method", action="store_true")
     parser.add_argument("-b", help="Use Bootstrap Evaluation method", action="store_true")
 
@@ -94,8 +89,8 @@ if __name__ == '__main__':
     arguments = parser.parse_args()
 
     if arguments:
-        advanced_missing_values = False
-        leave_one_out = False
+        advanced_missing_values = None
+        leave_one_out = None
         training_set_percentage = arguments.trainpercentage
         k = arguments.k
         evaluation_method = 'Holdout'
@@ -119,7 +114,7 @@ if __name__ == '__main__':
 
         print('Decision algorithm used: ' + decision_algorithm)
 
-        if arguments.h:
+        if arguments.o:
             evaluation_method = 'Holdout'
         elif arguments.v:
             evaluation_method = 'Cross-Validation'
@@ -128,6 +123,6 @@ if __name__ == '__main__':
 
         print('Evaluation method used: ' + evaluation_method)
 
-        ev.Evaluation(dirFichero, decision_algorithm, evaluation_method, k, leave_one_out,
-                      training_set_percentage,
-                      advanced_missing_values)
+        ev.Evaluation(dirFichero, decision_algorithm, evaluation_method, k=k, leave_one_out=leave_one_out,
+                      training_set_percentage=training_set_percentage,
+                      advanced_missing_values=advanced_missing_values)

@@ -3,8 +3,8 @@ import DataSet as ds
 import DecisionAlgorithm as da
 import numpy as np
 from graphviz import Digraph
+import datetime
 import os
-
 os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 
@@ -55,7 +55,8 @@ class DecisionTree:
         return np.add(class_counts, self.get_class_by())
 
     def traverse_tree(self):
-        g = Digraph('DecisionTree', format='png', filename='decisionTree.gv')
+        filename = 'decisionTree_' + str(datetime.datetime.now()) + '.gv'
+        g = Digraph('DecisionTree', format='png', filename=filename.replace(' ', '').replace(':', '-'))
         g.attr('node', shape='box')
 
         self.root.traverse(g)
