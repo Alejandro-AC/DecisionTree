@@ -30,7 +30,7 @@ class Node:
                 self.children_list.append(child)
 
     def traverse(self, graph, depth=0):
-        self.print(depth)
+        #self.print(depth)
 
         if depth is 0:
             self.add_root_to_graph(graph)

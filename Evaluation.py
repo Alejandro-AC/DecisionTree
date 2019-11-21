@@ -52,6 +52,7 @@ class Evaluation:
         test_set = ds.DataSet(data_set.data[num_training_samples:], data_set.labels)
 
         d_tree = dt.DecisionTree(training_set, decision_algorithm)
+        d_tree.traverse_tree()
 
         self.confusion_matrix = self.generate_confusion_matrix(d_tree, test_set)
 
@@ -87,7 +88,7 @@ class Evaluation:
         self.confusion_matrix = self.confusion_matrix / k
 
     def bootstrap_partitioning(self, data_set, decision_algorithm, k=None, training_set_percentage=None):
-        k = 42 if k is None else k
+        k = 5 if k is None else k
         training_set_percentage = 0.632 if training_set_percentage is None else training_set_percentage
 
         num_samples = data_set.data.shape[0]
@@ -99,6 +100,7 @@ class Evaluation:
             test_set = ds.DataSet(data_set.data[num_training_samples:], data_set.labels)
 
             d_tree = dt.DecisionTree(training_set, decision_algorithm)
+            d_tree.traverse_tree()
 
             aux_confusion_matrix = self.generate_confusion_matrix(d_tree, test_set)
 
@@ -175,3 +177,7 @@ class Evaluation:
         else:
             num_correctly_classified = sum(self.confusion_matrix.diagonal())
             accuracy = num_correctly_classified / num_classified_samples
+            print()
+            print('Number of samples in test: ' + str(num_classified_samples))
+            print()
+            print('accuracy: ' + str(accuracy))

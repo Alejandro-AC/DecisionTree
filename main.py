@@ -5,7 +5,6 @@ Created on Thu Nov  7 17:56:23 2019
 @author: Ronny
 '''
 
-import DecisionTree as dt
 import DataSet as ds
 import Evaluation as ev
 import numpy as np
@@ -64,7 +63,11 @@ if __name__ == '__main__':
         ['population', ['a', 'c', 'n', 's', 'v', 'y']],
         ['habitat', ['g', 'l', 'm', 'p', 'u', 'w', 'd']]
     ])
-    ds.DataSet.missing_value_indicator='?'
-    print()
 
-    eval = ev.Evaluation(dirFichero, 'C45', 'Holdout')
+    ds.DataSet.missing_value_indicator = '?'
+
+    # Decision algorithms: - C45 - ID3 - Gini
+    # Evaluation methods: - Holdout - Cross-Validation - Bootstrap
+
+    eval = ev.Evaluation(dirFichero, 'C45', 'Holdout', k=None, leave_one_out=None, training_set_percentage=None,
+                         advanced_missing_values=None)
